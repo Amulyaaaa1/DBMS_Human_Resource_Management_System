@@ -1,0 +1,422 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit HR User Privileges</title>
+    <style>
+        body { 
+            background-color: #f0f8ff; 
+            font-family: Arial, sans-serif; 
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header { 
+            text-align: center; 
+            background-color: #f0f8ff; 
+            padding: 20px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .title { 
+            font-size: 50px; 
+            color: #4682b4; 
+            font-family: 'Georgia', serif;
+        }
+        .main-content {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        .frame { 
+            padding: 20px; 
+            border: 4px solid #4682b4; 
+            width: 100%;
+            background-color: white; 
+            border-radius: 10px; 
+        }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-row label {
+            margin-right: 10px;
+            flex: 1;
+        }
+        .form-row input,
+        .form-row select {
+            flex: 2;
+            padding: 8px;
+            width: 100%;
+        }
+        button { 
+            background-color: #4682b4; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        button:hover { 
+            background-color: #5f9ea0; 
+        }
+        .flash-message { 
+            padding: 10px; 
+            margin-bottom: 20px; 
+            border-radius: 5px; 
+        }
+        .error { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #f5c6cb; 
+        }
+        .success { 
+            background-color: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb; 
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="/">Home</a>
+        <a href="/salary">Salary</a>
+        <a href="/employee-info">Employee Info</a>
+        <a href="/hr_department_employee_report">HR Department Employee Report</a>
+        <a href="/emp_records">Emp Records Updates</a>
+        
+    </div>
+<h1>Edit Privileges for HR User</h1>
+
+<form method="POST">
+    <h3>Select the privileges to grant to HR:</h3>
+    {% for privilege in available_privileges %}
+        <label>
+            <input type="checkbox" name="privileges" value="{{ privilege }}">
+            {{ privilege }}
+        </label><br>
+    {% endfor %}
+    
+    <button type="submit">Update Privileges</button>
+</form>
+
+<a href="{{ url_for('privileges') }}">Go back to privileges overview</a>
+
+</body>
+</html>
+-->
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit HR User Privileges</title>
+    <style>
+        body { 
+            background-color: #f0f8ff; 
+            font-family: Arial, sans-serif; 
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header { 
+            text-align: center; 
+            background-color: #4682b4; 
+            padding: 20px; 
+            color: white;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header h1 { 
+            font-size: 40px; 
+            font-family: 'Georgia', serif;
+        }
+        .main-content {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+        }
+        .frame { 
+            padding: 20px; 
+            border: 4px solid #4682b4; 
+            width: 100%;
+            background-color: white; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-row label {
+            margin-right: 10px;
+            flex: 1;
+        }
+        .form-row input,
+        .form-row select {
+            flex: 2;
+            padding: 8px;
+            width: 100%;
+        }
+        button { 
+            background-color: #4682b4; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover { 
+            background-color: #5f9ea0; 
+        }
+        .flash-message { 
+            padding: 10px; 
+            margin-bottom: 20px; 
+            border-radius: 5px; 
+        }
+        .error { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #f5c6cb; 
+        }
+        .success { 
+            background-color: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb; 
+        }
+        .sidebar {
+            height: 100vh;
+            width: 220px; /* Increased width for better aesthetics */
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #2e8b57; /* Updated to a more attractive color */
+            padding-top: 20px;
+            color: white;
+            overflow-x: hidden;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: background-color 0.3s, transform 0.2s;
+            border-radius: 5px; /* Rounded corners for links */
+        }
+        .sidebar a:hover {
+            background-color: #3cb371; /* Slightly darker green */
+            transform: scale(1.05); /* Slight scaling effect on hover */
+        }
+        .sidebar a.active {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="/" class="active">Home</a>
+        <a href="/salary">Salary</a>
+        <a href="/employee-info">Employee Info</a>
+        <a href="/hr_department_employee_report">HR Department Employee Report</a>
+        <a href="/emp_records">Emp Records Updates</a>
+        
+    </div>
+
+    <div class="main-content">
+        <div class="frame">
+            <h1>Edit HR User Privileges</h1>
+            <form method="POST">
+                <h3>Select the privileges to grant to HR:</h3>
+                <div class="form-row">
+                    {% for privilege in available_privileges %}
+                        <label>
+                            <input type="checkbox" name="privileges" value="{{ privilege }}">
+                            {{ privilege }}
+                        </label><br>
+                    {% endfor %}
+                </div>
+                <button type="submit">Update Privileges</button>
+            </form>
+            <a href="{{ url_for('privileges') }}" style="text-decoration: none; color: #4682b4; font-size: 16px;">Go back to privileges overview</a>
+        </div>
+    </div>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit HR User Privileges</title>
+    <style>
+        body { 
+            background-color: #f0f8ff; 
+            font-family: Arial, sans-serif; 
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header { 
+            text-align: center; 
+            background-color: #f0f8ff; 
+            padding: 20px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .title { 
+            font-size: 50px; 
+            color: #4682b4; 
+            font-family: 'Georgia', serif;
+        }
+        .main-content {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        .frame { 
+            padding: 20px; 
+            border: 4px solid #4682b4; 
+            width: 210%;
+            background-color: white; 
+            border-radius: 10px; 
+        }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-row label {
+            margin-right: 10px;
+            flex: 1;
+        }
+        .form-row input,
+        .form-row select {
+            flex: 2;
+            padding: 8px;
+            width: 100%;
+        }
+        button { 
+            background-color: #4682b4; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover { 
+            background-color: #5f9ea0; 
+        }
+        .flash-message { 
+            padding: 10px; 
+            margin-bottom: 20px; 
+            border-radius: 5px; 
+        }
+        .error { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #f5c6cb; 
+        }
+        .success { 
+            background-color: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb; 
+        }
+        .sidebar {
+            height: 100vh;
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #2e8b57;
+            padding-top: 20px;
+            color: white;
+            overflow-x: hidden;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: background-color 0.3s, transform 0.2s;
+            border-radius: 5px;
+        }
+        .sidebar a:hover {
+            background-color: #3cb371;
+            transform: scale(1.05);
+        }
+        .sidebar a.active {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="/">Home</a>
+        <a href="/salary">Salary</a>
+        <a href="/employee-info">Employee Info</a>
+        <a href="/hr_department_employee_report">HR Department Employee Report</a>
+        <a href="/emp_records">Emp Records Updates</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/update_privileges">Update Privileges</a>
+        <a href="/edit_hr_privileges">Edit HR Privileges</a>
+        <a href="/dashboard">Dasboard</a>
+    </div>
+
+    <div class="main-content">
+        <div class="frame">
+            <div class="header">
+                <h1 class="title">Edit HR User Privileges</h1>
+            </div>
+            <form method="POST">
+                <h3>Select the privileges to grant to HR:</h3>
+                <div class="form-row">
+                    {% for privilege in available_privileges %}
+                        <label>
+                            <input type="checkbox" name="privileges" value="{{ privilege }}">
+                            {{ privilege }}
+                        </label><br>
+                    {% endfor %}
+                </div>
+                <button type="submit">Update Privileges</button>
+            </form>
+            <a href="{{ url_for('privileges') }}" style="text-decoration: none; color: #4682b4; font-size: 16px;">Go back to privileges overview</a>
+        </div>
+    </div>
+</body>
+</html>

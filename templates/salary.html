@@ -1,0 +1,384 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Details</title>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Information</title>
+    <style>
+        body { 
+            background-color: #f0f8ff; 
+            font-family: Arial, sans-serif; 
+            margin: 0; /* Remove default body margin */
+            display: flex; /* Use flexbox for centering */
+            flex-direction: column; /* Stack child elements vertically */
+            align-items: center; /* Center horizontally */
+        }
+        .header { 
+            text-align: center; 
+            background-color: #f0f8ff; 
+            padding: 20px; 
+            width: 100%; /* Make header full width */
+        }
+        .title { 
+            font-size: 40px; 
+            color: #4682b4; 
+        }
+        .sidebar {
+            height: 100vh;
+            width: 200px; /* Increased width for better aesthetics */
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #e6e8c8;
+            padding-top: 20px;
+            color: white;
+            overflow-x: hidden;
+        }
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #e7d8b6;
+        }
+        .main-content {
+            margin-left: 210px; /* Offset for the sidebar */
+            padding: 20px;
+            display: flex;
+            justify-content: center; /* Center contents horizontally */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center children horizontally */
+            width: 100%; /* Allow main content to take full width */
+        }
+        .frame { 
+            margin: 20px auto; /* Center frame */
+            padding: 20px; 
+            border: 4px solid #4682b4; /* Maintain the blue border */
+            width: 90%; /* Increase to desired width percentage */
+            max-width: 1200px; /* Set a maximum width for larger screens */
+            background-color: white; /* Ensure the background is white */
+            border-radius: 10px; /* Rounded corners for aesthetics */
+        }
+
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+        }
+        th, td { 
+            border: 1px solid #4682b4; 
+            padding: 10px; 
+            text-align: center; 
+        }
+        th { 
+            background-color: #87cefa; 
+        }
+        button { 
+            background-color: #4682b4; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        button:hover { 
+            background-color: #5f9ea0; 
+        }
+        .flash-message { 
+            padding: 10px; 
+            margin-bottom: 20px; 
+            border-radius: 5px; 
+        }
+        .error { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #f5c6cb; 
+        }
+        .success { 
+            background-color: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb; 
+        }
+
+        /* New styles for the input fields */
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px; /* Add space between rows */
+        }
+        .form-row label {
+            margin-right: 10px; /* Space between label and input */
+            flex: 1; /* Allow labels to grow */
+        }
+        .form-row input,
+        .form-row select {
+            flex: 2; /* Inputs take more space than labels */
+            padding: 8px; /* Padding inside inputs */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="/">Home</a>
+        <a href="/salary">Salary</a>
+        <a href="/employee-info">Employee Info</a>
+        <a href="/hr_department_employee_report">hr_department_employee_report</a>
+        <a href="/emp_records">Emp Records Updates </a>
+       
+    </div>
+    <div class="header">
+        <h1 class="title">Salary Details</h1>
+    </div>
+    <div class="frame">
+        <h2>Filter Employees by Salary Grade</h2>
+        <form action="/filter_salary_grade" method="POST">
+            <label for="grade">Select Salary Grade:</label>
+            <select name="grade" id="grade" required>
+                <option value="" disabled selected>Select Grade</option>
+                <option value="A" {% if selected_grade == 'A' %}selected{% endif %}>A</option>
+                <option value="B" {% if selected_grade == 'B' %}selected{% endif %}>B</option>
+                <option value="C" {% if selected_grade == 'C' %}selected{% endif %}>C</option>
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
+        
+        {% if filtered_employees %}
+        <h3>Employees with Salary Grade "{{ selected_grade }}"</h3>
+        <table border="1">
+            <tr>
+                <th>Emp ID</th><th>First Name</th><th>Last Name</th><th>Salary Grade</th><th>Salary</th><th>Bonus</th>
+            </tr>
+            {% for emp in filtered_employees %}
+            <tr>
+                <td>{{ emp.empid }}</td>
+                <td>{{ emp.firstname }}</td>
+                <td>{{ emp.lastname }}</td>
+                <td>{{ emp.salgrade }}</td>
+                <td>{{ emp.salary }}</td>
+                <td>{{ emp.sal_bonus }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Details</title>
+    <style>
+        body { 
+            background-color: #f0f8ff; 
+            font-family: Arial, sans-serif; 
+            margin: 0; /* Remove default body margin */
+            display: flex; /* Use flexbox for centering */
+            flex-direction: column; /* Stack child elements vertically */
+            align-items: center; /* Center horizontally */
+        }
+        .header { 
+            text-align: center; 
+            background-color: #f0f8ff; 
+            padding: 20px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .title { 
+            font-size: 50px; 
+            color: #4682b4; 
+            font-family: 'Georgia', serif; /* Use a contrasting font */
+        }
+        .sidebar {
+            height: 100vh;
+            width: 220px; /* Increased width for better aesthetics */
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #2e8b57; /* Updated to a more attractive color */
+            padding-top: 20px;
+            color: white;
+            overflow-x: hidden;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: background-color 0.3s, transform 0.2s;
+            border-radius: 5px; /* Rounded corners for links */
+        }
+        .sidebar a:hover {
+            background-color: #3cb371; /* Slightly darker green */
+            transform: scale(1.05); /* Slight scaling effect on hover */
+        }
+        .main-content {
+            margin-left: 210px; /* Offset for the sidebar */
+            padding: 20px;
+            display: flex;
+            justify-content: center; /* Center contents horizontally */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center children horizontally */
+            width: 100%; /* Allow main content to take full width */
+        }
+        .frame { 
+            margin: 20px auto; /* Center frame */
+            padding: 20px; 
+            border: 4px solid #4682b4; /* Maintain the blue border */
+            width: 90%; /* Increase to desired width percentage */
+            max-width: 1200px; /* Set a maximum width for larger screens */
+            background-color: white; /* Ensure the background is white */
+            border-radius: 10px; /* Rounded corners for aesthetics */
+        }
+
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+        }
+        th, td { 
+            border: 1px solid #4682b4; 
+            padding: 10px; 
+            text-align: center; 
+        }
+        th { 
+            background-color: #87cefa; 
+        }
+        button { 
+            background-color: #4682b4; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        button:hover { 
+            background-color: #5f9ea0; 
+        }
+        .flash-message { 
+            padding: 10px; 
+            margin-bottom: 20px; 
+            border-radius: 5px; 
+        }
+        .error { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #f5c6cb; 
+        }
+        .success { 
+            background-color: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb; 
+        }
+
+        /* New styles for the input fields */
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px; /* Add space between rows */
+            width: 100%; /* Full width for the row */
+        }
+        .form-row label {
+            margin-right: 10px; /* Space between label and input */
+            flex: 1; /* Allow labels to grow */
+        }
+        .form-row input,
+        .form-row select {
+            flex: 2; /* Inputs take more space than labels */
+            padding: 8px; /* Padding inside inputs */
+            width: 300px; /* Set a fixed width for the dropdown */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="/">Home</a>
+        <a href="/salary">Salary</a>
+        <a href="/employee-info">Employee Info</a>
+        <a href="/hr_department_employee_report">HR Department Employee Report</a>
+        <a href="/emp_records">Emp Records Updates</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/update_privileges">Update Privileges</a>
+        <a href="/edit_hr_privileges">Edit HR Privileges</a>
+        <a href="/dashboard">Dasboard</a>
+        <!-- Add more sidebar links here as needed -->
+    </div>
+    <div class="header">
+        <h1 class="title">Salary Details</h1>
+    </div>
+    <div class="frame">
+        <h2>Filter Employees by Salary Grade</h2>
+        <form action="/filter_salary_grade" method="POST">
+            <div class="form-row">
+                <label for="grade">Select Salary Grade:</label>
+                <select name="grade" id="grade" required>
+                    <option value="" disabled selected>Select Grade</option>
+                    <option value="A" {% if selected_grade == 'A' %}selected{% endif %}>A</option>
+                    <option value="B" {% if selected_grade == 'B' %}selected{% endif %}>B</option>
+                    <option value="C" {% if selected_grade == 'C' %}selected{% endif %}>C</option>
+                </select>
+                <button type="submit">Filter</button>
+            </div>
+        </form>
+        
+        <!-- Display Filtered Employees Based on Selected Salary Grade -->
+        {% if filtered_employees %}
+        <h3>Employees with Salary Grade "{{ selected_grade }}"</h3>
+        <table border="1">
+            <tr>
+                <th>Emp ID</th><th>First Name</th><th>Last Name</th><th>Salary Grade</th><th>Salary</th><th>Bonus</th>
+            </tr>
+            {% for emp in filtered_employees %}
+            <tr>
+                <td>{{ emp.empid }}</td>
+                <td>{{ emp.firstname }}</td>
+                <td>{{ emp.lastname }}</td>
+                <td>{{ emp.salgrade }}</td>
+                <td>{{ emp.salary }}</td>
+                <td>{{ emp.sal_bonus }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        
+        {% if total_employees is not none %}
+    <p>Total Employees in Grade {{ selected_grade }}: {{ total_employees }}</p>
+{% endif %}
+{% if max_salary is not none %}
+    <p style="color: green;">Maximum Salary in Grade {{ selected_grade }}: ${{ max_salary }}</p>
+{% endif %}
+
+{% if min_salary is not none %}
+    <p style="color: red;">Minimum Salary in Grade {{ selected_grade }}: ${{ min_salary }}</p>
+{% endif %}
+
+{% if max_bonus is not none %}
+    <p style="color: green;">Maximum Bonus in Grade {{ selected_grade }}: ${{ max_bonus }}</p>
+{% endif %}
+
+{% if min_bonus is not none %}
+    <p style="color: red;">Minimum Bonus in Grade {{ selected_grade }}: ${{ min_bonus }}</p>
+{% endif %}
+    </div>
+</body>
+</html>

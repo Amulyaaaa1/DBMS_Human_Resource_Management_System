@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Resource Management System</title>
+    <style>
+        body { 
+            background-color: #f0f8ff; 
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+        }
+        .header { 
+            text-align: center; 
+            background-color: #f0f8ff; 
+            padding: 20px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .title { 
+            font-size: 50px; 
+            color: #4682b4; 
+            font-family: 'Georgia', serif; /* Use a contrasting font */
+        }
+        .sidebar {
+            height: 100vh;
+            width: 220px; /* Increased width for better aesthetics */
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #2e8b57; /* Updated to a more attractive color */
+            padding-top: 20px;
+            color: white;
+            overflow-x: hidden;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: background-color 0.3s, transform 0.2s;
+            border-radius: 5px; /* Rounded corners for links */
+        }
+        .sidebar a:hover {
+            background-color: #3cb371; /* Slightly darker green */
+            transform: scale(1.05); /* Slight scaling effect on hover */
+        }
+
+        /* Main content styles */
+        .main-content {
+            margin-left: 240px; /* Offset for the sidebar */
+            padding: 20px;
+            transition: margin-left 0.3s;
+        }
+
+        .frame { 
+            margin: 50px auto; 
+            padding: 20px; 
+            border: 4px solid #4682b4; 
+            width: 80%; 
+            background-color: white;
+            border-radius: 10px; /* Rounded corners for aesthetics */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* Shadow for depth */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #4682b4;
+            padding: 10px;
+            text-align: left;
+            transition: background-color 0.3s; /* Smooth transition for cell hover */
+        }
+        th {
+            background-color: #87cefa;
+            font-weight: bold;
+        }
+        h2 {
+            margin-top: 20px;
+            color: #4682b4;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Hover effect for table rows */
+        tr:hover {
+            background-color: #f5f5f5; /* Light gray on hover */
+        }
+
+        /* Button styling */
+        button {
+            background-color: #4682b4; /* Original button color */
+            color: white;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            padding: 10px 15px; /* Padding for buttons */
+            cursor: pointer;
+            transition: transform 0.2s; /* Transition for hover effects */
+        }
+        button:hover {
+            transform: scale(1.05); /* Slight scaling on hover */
+        }
+        
+        /* Button focus outline */
+        button:focus {
+            outline: 2px solid blue; /* Clear focus outline */
+        }
+
+        /* Search container styles */
+        .search-container, .button-container {
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Center items vertically */
+            margin-bottom: 20px; /* Add some space below the container */
+        }
+
+        .search-container label {
+            margin-right: 10px; /* Space between label and input */
+            font-weight: bold; /* Make the label bold */
+        }
+
+        .search-container input {
+            flex: 1; /* Allow input to take remaining space */
+            padding: 10px; /* Padding for the input */
+            border: 1px solid #4682b4; /* Match input border with theme */
+            border-radius: 5px; /* Rounded corners for input */
+            margin-right: 10px; /* Space between input and button */
+        }
+
+        /* Button spacing */
+        .button-container button {
+            margin-right: 10px; /* Space between buttons */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Human Resource Management System</h1>
+    </div>
+    <div class="sidebar">
+        <a href="/">Home</a>
+        <a href="/salary">Salary</a>
+        <a href="/employee-info">Employee Info</a>
+        <a href="/hr_department_employee_report">HR Department Employee Report</a>
+        <a href="/emp_records">Emp Records Updates</a>
+        <!--<a href="/login">Login</a>
+        <a href="/register">Register</a>
+        
+        <a href="/dashboard">Dasboard</a>-->
+        <!-- Add more sidebar links here as needed -->
+    </div>
+    <div class="main-content">
+        <div class="frame">
+            <h2>Employee Information</h2>
+            <form action="/search_employee" method="POST">
+                <div class="search-container">
+                    <label for="empName">Employee Name:</label>
+                    <input type="text" id="empName" name="empName" required placeholder="Enter employee name">
+                    <button type="submit">Search</button>
+                </div>
+            </form>
+
+            <h2>Execute Queries</h2>
+            <div class="button-container">
+                <form action="/view_employees" method="POST">
+                    <button type="submit">View Employees</button>
+                </form>
+                <form action="/view_assessments" method="POST">
+                    <button type="submit">View Growth Assessments</button>
+                </form>
+                <form action="/view_achievements" method="POST">
+                    <button type="submit">View Achievements</button>
+                </form>
+            </div>
+
+            <!-- Display Searched Employee Details -->
+            {% if employee %}
+                <h3>Employee Details</h3>
+                <table>
+                    <tr>
+                        <th>Emp ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Contributions</th>
+                        <th>Star of the Month</th>
+                        <th>Years at Company</th>
+                        <th>Achievements</th>
+                    </tr>
+                    {% for emp in employee %}
+                    <tr>
+                        <td>{{ emp.empid }}</td>
+                        <td>{{ emp.firstname }}</td>
+                        <td>{{ emp.lastname }}</td>
+                        <td>{{ emp.contributions }}</td>
+                        <td>{{ emp.starofthemonth }}</td>
+                        <td>{{ emp.no_of_yrs_at_comp }}</td>
+                        <td>{{ emp.achievements }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No employee found with that name.</p>
+            {% endif %}
+
+            <!-- Display Employee Data -->
+            {% if employees %}
+                <h3>Employee Table</h3>
+                <table>
+                    <tr>
+                        <th>Emp ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Contributions</th>
+                        <th>Star of the Month</th>
+                        <th>Years at Company</th>
+                        <th>Achievements</th>
+                    </tr>
+                    {% for emp in employees %}
+                    <tr>
+                        <td>{{ emp.empid }}</td>
+                        <td>{{ emp.firstname }}</td>
+                        <td>{{ emp.lastname }}</td>
+                        <td>{{ emp.contributions }}</td>
+                        <td>{{ emp.starofthemonth }}</td>
+                        <td>{{ emp.no_of_yrs_at_comp }}</td>
+                        <td>{{ emp.achievements }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+
+            <!-- Display Growth Assessment Data -->
+            {% if assessments %}
+                <h3>Growth Assessment Table</h3>
+                <table>
+                    <tr>
+                        <th>Assessment ID</th>
+                        <th>Date</th>
+                        <th>Emp ID</th>
+                        <th>Training Recommendation</th>
+                    </tr>
+                    {% for assess in assessments %}
+                    <tr>
+                        <td>{{ assess.assessid }}</td>
+                        <td>{{ assess.assess_date }}</td>
+                        <td>{{ assess.empid }}</td>
+                        <td>{{ assess.training_recom }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+
+            <!-- Display Employee Achievements Data -->
+            {% if achievements %}
+                <h3>Employee Achievements Table</h3>
+                <table>
+                    <tr>
+                        <th>Achievement ID</th>
+                        <th>Emp ID</th>
+                        <th>Achievement</th>
+                    </tr>
+                    {% for achievement in achievements %}
+                    <tr>
+                        <td>{{ achievement.achievement_id }}</td>
+                        <td>{{ achievement.empid }}</td>
+                        <td>{{ achievement.achievement }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
